@@ -1,0 +1,18 @@
+[project]
+name = "inline-ai"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=1.13.0",
+    "dotenv>=0.9.9",
+    "pynput>=1.8.2",
+    "pyperclip>=1.11.0",
+]
+
+[project.scripts]
+inline-ai = "inline_ai.main:main"
+
+[tool.uv]
+package = true

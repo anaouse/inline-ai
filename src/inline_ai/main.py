@@ -115,9 +115,18 @@ class InlineAI:
 
         self.shortcut(keyboard.Key.end, shift=True)
         after = self.copy_selection()
-        if after:
-            self.controller.tap(keyboard.Key.left)
+        # Shift 选区的锚点仍在原光标位置。向文首重新选择后，
+        # 右键取消选区可回到锚点，不依赖光标后是否有文本。
+        self.shortcut(keyboard.Key.home, shift=True)
+        if before:
+            self.controller.tap(keyboard.Key.right)
             time.sleep(0.08)
+        else:
+            self.shortcut(keyboard.Key.home)
+
+        # 空选区复制当前行时，不把当前行当作后文。
+        if after in (before.rsplit("\n", 1)[-1], before.rsplit("\n", 1)[-1] + "\n"):
+            after = ""
         return before, after
 
     def notify(self, message: str):
